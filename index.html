@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Project 2</title>
+	<title>Project 2</title>
+	<style>
+		*{
+			background: #f0f0f4;
+		}
+		canvas {
+			background-image: url("space.jpg");
+			display: block;
+			margin: auto;
+		}
+		p{
+			font-size:20px;
+			text-align:center;
+			font-family: Helvetica;
+		}
+	</style>
 </head>
-
 <body>
-    <canvas id="render-canvas" width="960" height="540"></canvas>
-    <script src="script.js"></script>
+	<p id = "level"></p>
+	<canvas id = "canvas" width="512" height = "480"></canvas>
+	<p><b>INSTRUCTIONS:</b> <- Left and Right arrow keys to move -></p>
+	<p>Collect as many primary colors as you can but be careful to avoid all other colors!</p>
+	<script src="script.js"></script>
 </body>
-
 </html>
