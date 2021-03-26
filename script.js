@@ -132,7 +132,7 @@ function drawBlackBall() {
 // draw player to canvas
 function drawPlayer() {
   base_image = new Image();
-  base_image.src = 'ship2.png';
+  base_image.src = 'sship.png';
   contxt.drawImage(base_image, player.x, player.y, player.size, player.size);
 	// contxt.beginPath();
 	// contxt.rect(player.x, player.y, player.size, player.size);
