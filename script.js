@@ -1,9 +1,12 @@
+//create and initialize variables
 var canvas = document.getElementById("canvas");
+var image = 'sship.png';
 var contxt = canvas.getContext("2d");
 
 var lefty = false;
 var righty = false;
-var gameOver = true;
+var gameOver = false;
+var startScreen = true;
 var score = 0;
 var lives = 3;
 var track = 0;
@@ -14,7 +17,7 @@ var level = 1;
 document.addEventListener("keydown", keysDown, false);
 document.addEventListener("keyup", keysUp, false);
 
-// when key is pressed down, move
+// when key is pressed
 function keysDown(e) {
 	if(e.keyCode == 39){
 		righty = true;
@@ -25,8 +28,12 @@ function keysDown(e) {
 	else if(e.keyCode == 32 && gameOver){
 		playAgain();
 	}
+  else if(e.keyCode == 32 && startScreen){
+    startScreen = false;
+		playAgain();
+	}
 }
-// when key is released, stop moving
+// when key is released
 function keysUp(e) {
 	if(e.keyCode == 39){
 		righty = false;
@@ -37,7 +44,7 @@ function keysUp(e) {
 	
 }
 
-// player specs
+// player object
 var player = {
 	size: 40,
 	x: (canvas.width -40)/ 2,
@@ -45,7 +52,7 @@ var player = {
 	color: "green"
 };
 
-// specs for balls you want to collect
+// benefit objects
 var goodArc = {
 	x:[],
 	y:[],
@@ -55,12 +62,12 @@ var goodArc = {
 };
 var redNum = 0;
 
-// specs for balls you want to avoid
+// harm objects
 var badArc = {
 	x:[],
 	y:[],
 	speed: 2,
-	color: ["purple", "white"]
+	color: ["purple", "white", "green"]
 
 };
 var blackNum = 0;
@@ -100,7 +107,7 @@ function drawNewBad() {
 	blackNum = badArc.x.length;
 }
 
-// draws red and blue balls
+// draws objects to collect
 function drawRedBall() {
 	for(var i = 0; i < redNum; i++){
 		if(goodArc.state[i] == true){
@@ -116,7 +123,7 @@ function drawRedBall() {
 	}
 }
 
-// draws black ball to avoid
+// draws objects to avoid
 function drawBlackBall() {
 	for(var i = 0; i < blackNum; i++){
 		//Keeps track of position in color array with changing blackNum size
@@ -124,7 +131,7 @@ function drawBlackBall() {
 		
 		contxt.beginPath();
 		contxt.arc(badArc.x[i], badArc.y[i], rad, 0, Math.PI * 2);
-		contxt.fillStyle = badArc.color[badCol % 2];
+		contxt.fillStyle = badArc.color[badCol % 3];
 		contxt.fill();
 		contxt.closePath();
 	}
@@ -132,13 +139,8 @@ function drawBlackBall() {
 // draw player to canvas
 function drawPlayer() {
   base_image = new Image();
-  base_image.src = 'sship.png';
+  base_image.src = image;
   contxt.drawImage(base_image, player.x, player.y, player.size, player.size);
-	// contxt.beginPath();
-	// contxt.rect(player.x, player.y, player.size, player.size);
-	// contxt.fillStyle = player.color;
-	// contxt.fill();
-	// contxt.closePath();
 }
 
 // moves objects in play
@@ -236,9 +238,20 @@ function playAgain() {
 	badArc.speed = 2;
 	goodArc.speed = 2;
 }
+
 function draw(){
 	contxt.clearRect(0, 0, canvas.width, canvas.height);
-	if(!gameOver){
+  if(startScreen){
+    contxt.fillStyle = "white";
+		contxt.font = "25px Helvetica";
+		contxt.textAlign = "center";
+		contxt.fillText("Welcome!", canvas.width/2, 175);
+		
+		contxt.font = "20px Helvetica";
+		contxt.fillText("PRESS SPACE TO PLAY", canvas.width/2, 475);
+  }
+	else if(!gameOver){
+    
 		drawPlayer();
 		drawBlackBall();
 		drawRedBall();
@@ -247,7 +260,7 @@ function draw(){
 		drawNewBad();
 			
 		//score
-		contxt.fillStyle = "black";
+		contxt.fillStyle = "white";
 		contxt.font = "20px Helvetica";
 		contxt.textAlign = "left";
 		contxt.fillText("Score: " + score, 10, 25);
