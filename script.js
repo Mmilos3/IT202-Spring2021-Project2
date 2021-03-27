@@ -86,13 +86,13 @@ function drawNewGood(){
 
 //adds values to x property of badArc
 function drawNewBad() {
-	if(score < 30){
+	if(score < 300){
 		if(Math.random() < .05){
 			badArc.x.push(Math.random() * canvas.width);
 			badArc.y.push(0);
 		}
 	}
-	else if(score < 50){
+	else if(score < 500){
 		if(Math.random() < .1){
 			badArc.x.push(Math.random() * canvas.width);
 			badArc.y.push(0);
@@ -164,7 +164,7 @@ function playUpdate() {
 		// Only counts collision once
 		if(goodArc.state[i]){
 			if(player.x < goodArc.x[i] + rad && player.x + 30 + rad> goodArc.x[i] && player.y < goodArc.y[i] + rad && player.y + 30 > goodArc.y[i]){
-				score++
+				score+=10;
 				// Cycles through goodArc's color array
 				//player.color = goodArc.color[(i + track) % 3];
 				goodArc.state[i] = false;
@@ -195,22 +195,22 @@ function playUpdate() {
 		}
 	}
 	switch(score){
-		case 10:
+		case 100:
 			badArc.speed = 3;
 			goodArc.speed = 3;
 			level = 2;
 			break;
-		case 20:
+		case 200:
       badArc.speed = 4;
 			goodArc.speed = 4;
 			level = 3;
 			break;
-		case 30: 
+		case 300: 
 			badArc.speed = 5;
 			goodArc.speed = 5;
 			level = 4;
 			break;
-		case 40:
+		case 400:
       badArc.speed = 6;
 			goodArc.speed = 6;
 			level = 5;
@@ -245,7 +245,7 @@ function draw(){
     contxt.fillStyle = "white";
 		contxt.font = "25px Helvetica";
 		contxt.textAlign = "center";
-		contxt.fillText("Welcome!", canvas.width/2, 175);
+		contxt.fillText("Welcome to The Galaxy Collection Game!", canvas.width/2, 175);
 		
 		contxt.font = "20px Helvetica";
 		contxt.fillText("PRESS SPACE TO PLAY", canvas.width/2, 475);
